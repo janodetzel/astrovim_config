@@ -146,6 +146,7 @@ local config = {
         null_ls.builtins.diagnostics.rubocop,
         -- null_ls.builtins.diagnostics.eslint,
         null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.code_actions.eslint_d,
       }
       -- set up null-ls's on_attach function
       config.on_attach = function(client)

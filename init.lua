@@ -7,9 +7,22 @@ local function organize_imports()
   vim.lsp.buf.execute_command(params)
 end
 
+-- local function eslint_config_exists()
+--   -- local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
+--   -- if not vim.tbl_isempty(eslintrc) then
+--   --   return true
+--   -- end
+--   if vim.fn.filereadable("package.json") then
+--   --   if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
+--   --     return true
+--   --   end
+--       vim.fn.echo "SpecificFile exists"
+--       return true
+--   end
+--   return false
+-- end
+
 local config = {
-
-
   -- Configure AstroNvim updates
   updater = {
     remote = "origin", -- remote to use
@@ -114,8 +127,11 @@ local config = {
       -- },
       {
         "github/copilot.vim"
-      }
+      },
+      { "sheerun/vim-polyglot" },
+      { "AndrewRadev/tagalong.vim"}
     },
+    -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
     ["null-ls"] = function(config)
       local null_ls = require "null-ls"
@@ -125,11 +141,11 @@ local config = {
       config.sources = {
         -- Set a formatter
         null_ls.builtins.formatting.rufo,
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettierd,
         -- Set a linter
         null_ls.builtins.diagnostics.rubocop,
+        -- null_ls.builtins.diagnostics.eslint,
         null_ls.builtins.diagnostics.eslint_d,
-        -- null_ls.builtins.code_actions.eslint_d
       }
       -- set up null-ls's on_attach function
       config.on_attach = function(client)
@@ -143,6 +159,26 @@ local config = {
         end
       end
       return config -- return final config table
+    end,
+    cmp = function(config)
+      local cmp_ok, cmp = pcall(require, "cmp")
+
+      if cmp_ok then
+	      config.mapping['<Tab>'] = cmp.mapping(
+	        function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif vim.b._copilot_suggestion ~= nil then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
+            else
+              fallback()
+            end
+          end, {
+            'i',
+            's',
+          })
+      end
+      return config
     end,
     treesitter = {
       ensure_installed = { "lua" },
@@ -187,7 +223,7 @@ local config = {
           },
           l = {
               o = { "<cmd>OrganizeImports<cr>", "Organize Imports"},
-            -- p = { "<cmd>Neoformat prettier<cr>", "Prettier"},
+              p = { "<cmd>Copilot panel<cr>", "Copilot"},
           }
         },
       },
@@ -271,6 +307,9 @@ local config = {
     n = {
       -- second key is the lefthand side of the map
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
+    },
+    i = {
+      ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true }
     },
     t = {
       -- setting a mapping to false will disable it

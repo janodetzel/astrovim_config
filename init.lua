@@ -129,7 +129,7 @@ local config = {
         "github/copilot.vim"
       },
       { "sheerun/vim-polyglot" },
-      { "AndrewRadev/tagalong.vim"}
+      { "AndrewRadev/tagalong.vim" },
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins

@@ -1,27 +1,3 @@
-local function organize_imports()
-  local params = {
-    command = "_typescript.organizeImports",
-    arguments = {vim.api.nvim_buf_get_name(0)},
-    title = ""
-  }
-  vim.lsp.buf.execute_command(params)
-end
-
--- local function eslint_config_exists()
---   -- local eslintrc = vim.fn.glob(".eslintrc*", 0, 1)
---   -- if not vim.tbl_isempty(eslintrc) then
---   --   return true
---   -- end
---   if vim.fn.filereadable("package.json") then
---   --   if vim.fn.json_decode(vim.fn.readfile("package.json"))["eslintConfig"] then
---   --     return true
---   --   end
---       vim.fn.echo "SpecificFile exists"
---       return true
---   end
---   return false
--- end
-
 local config = {
   -- Configure AstroNvim updates
   updater = {
@@ -125,11 +101,11 @@ local config = {
       --     require("lsp_signature").setup()
       --   end,
       -- },
-      {
-        "github/copilot.vim"
-      },
+      { "github/copilot.vim" },
       { "sheerun/vim-polyglot" },
       { "AndrewRadev/tagalong.vim" },
+      { "nvim-lua/plenary.nvim" },
+      { "jose-elias-alvarez/nvim-lsp-ts-utils" }
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
@@ -145,8 +121,12 @@ local config = {
         -- Set a linter
         null_ls.builtins.diagnostics.rubocop,
         -- null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.diagnostics.eslint_d,
-        null_ls.builtins.code_actions.eslint_d,
+        null_ls.builtins.diagnostics.eslint_d.with({
+            only_local = "node_modules/.bin"
+          }),
+        null_ls.builtins.code_actions.eslint_d.with({
+            only_local = "node_modules/.bin"
+          })
       }
       -- set up null-ls's on_attach function
       config.on_attach = function(client)
@@ -223,8 +203,10 @@ local config = {
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
           l = {
-              o = { "<cmd>OrganizeImports<cr>", "Organize Imports"},
-              p = { "<cmd>Copilot panel<cr>", "Copilot"},
+              o = { "Organize Imports" },
+              R = { "Rename current file" },
+              A = { "Import all missing" },
+              p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
           }
         },
       },
@@ -260,9 +242,65 @@ local config = {
     },
     -- add to the server on_attach function
     -- on_attach = function(client, bufnr)
-    on_attach = function(client)
+    on_attach = function(client, bufnr)
       if client.name == "tsserver" then
         client.resolved_capabilities.document_formatting = false
+        local ts_utils = require("nvim-lsp-ts-utils")
+
+        -- defaults
+        ts_utils.setup({
+            debug = false,
+            disable_commands = false,
+            enable_import_on_completion = false,
+            -- import all
+            import_all_timeout = 5000,
+            import_all_priorities = {
+                same_file = 1, -- add to existing import statement
+                local_files = 2, -- git files or files with relative path markers
+                buffer_content = 3, -- loaded buffer content
+                buffers = 4, -- loaded buffer names
+            },
+            import_all_scan_buffers = 100,
+            import_all_select_source = false,
+            -- if false will avoid organizing imports
+            always_organize_imports = true,
+
+            -- filter diagnostics
+            filter_out_diagnostics_by_severity = {},
+            filter_out_diagnostics_by_code = {},
+
+            -- inlay hints
+            auto_inlay_hints = true,
+            inlay_hints_highlight = "Comment",
+            inlay_hints_priority = 200, -- priority of the hint extmarks
+            inlay_hints_throttle = 150, -- throttle the inlay hint request
+            inlay_hints_format = { -- format options for individual hint kind
+                Type = {},
+                Parameter = {},
+                Enum = {},
+                -- Example format customization for `Type` kind:
+                -- Type = {
+                --     highlight = "Comment",
+                --     text = function(text)
+                --         return "->" .. text:sub(2)
+                --     end,
+                -- },
+            },
+
+            -- update imports on file move
+            update_imports_on_move = false,
+            require_confirmation_on_move = false,
+            watch_dir = nil,
+          })
+
+        ts_utils.setup_client(client)
+
+        -- no default maps, so you may want to define some here
+        local opts = { silent = true }
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lo", ":TSLspOrganize<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lR", ":TSLspRenameFile<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lA", ":TSLspImportAll<CR>", opts)
+
       end
     end,
 
@@ -286,12 +324,7 @@ local config = {
       --   },
       -- },
       tsserver = {
-        commands = {
-          OrganizeImports = {
-            organize_imports,
-            description = "OrganizeImports"
-          }
-        },
+        init_options = require("nvim-lsp-ts-utils").init_options,
       }
   	},
 

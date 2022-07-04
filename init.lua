@@ -105,7 +105,13 @@ local config = {
       { "sheerun/vim-polyglot" },
       { "AndrewRadev/tagalong.vim" },
       { "nvim-lua/plenary.nvim" },
-      { "jose-elias-alvarez/nvim-lsp-ts-utils" }
+      { "jose-elias-alvarez/nvim-lsp-ts-utils" },
+      {
+        "ur4ltz/surround.nvim",
+        config = function()
+         require"surround".setup {mappings_style = "surround"}
+        end
+      },
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
@@ -163,6 +169,9 @@ local config = {
     end,
     treesitter = {
       ensure_installed = { "lua" },
+      autotag = {
+        enabled = true,
+      }
     },
     ["nvim-lsp-installer"] = {
       ensure_installed = { "sumneko_lua" },
@@ -343,7 +352,8 @@ local config = {
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
     },
     i = {
-      ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true }
+      ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
+      s = false
     },
     t = {
       -- setting a mapping to false will disable it

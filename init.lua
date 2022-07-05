@@ -32,7 +32,8 @@ local config = {
   },
 
   -- Set colorscheme
-  colorscheme = "default_theme",
+  -- colorscheme = "default_theme",
+  colorscheme = "dracula",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -112,6 +113,7 @@ local config = {
          require"surround".setup {mappings_style = "surround"}
         end
       },
+      { "Mofiqul/dracula.nvim" }
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
@@ -188,6 +190,7 @@ local config = {
     -- Extend filetypes
     filetype_extend = {
       javascript = { "javascriptreact" },
+      typescript = { "typescriptreact" },
     },
   },
 
@@ -201,14 +204,15 @@ local config = {
         ["<leader>"] = {
           -- which-key registration table for normal mode, leader prefix
           ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
+          ["C"] = { "<cmd>bufdo bwipeout<cr>", "Close allbuffers"},
           f = {
             name = "Telescope",
             ["?"] = { "<cmd>Telescope help_tags<cr>", "Find Help" },
             c = { "<cmd>Telescope commands<cr>", "Commands" },
             h = { "<cmd>Telescope oldfiles<cr>", "History" },
             k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-            m = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-            n = { "<cmd>Telescope notify<cr>", "Notifications" },
+            M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+            N = { "<cmd>Telescope notify<cr>", "Notifications" },
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
           l = {
@@ -297,7 +301,7 @@ local config = {
             },
 
             -- update imports on file move
-            update_imports_on_move = false,
+            update_imports_on_move = true,
             require_confirmation_on_move = false,
             watch_dir = nil,
           })

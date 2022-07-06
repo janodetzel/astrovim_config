@@ -220,7 +220,16 @@ local config = {
               R = { "Rename current file" },
               A = { "Import all missing" },
               p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
-          }
+          },
+          t = {
+            b = {
+                function()
+                  local Terminal  = require('toggleterm.terminal').Terminal
+                  local btop = Terminal:new({ cmd = "btop", hidden = true, direction = "float" })
+                  btop:toggle()
+                end,
+                "ToggleTerm btop"}
+          },
         },
       },
     },

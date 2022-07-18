@@ -113,7 +113,8 @@ local config = {
          require"surround".setup {mappings_style = "surround"}
         end
       },
-      { "Mofiqul/dracula.nvim" }
+      -- { "Mofiqul/dracula.nvim" }
+      { "https://github.com/janodetzel/dracula.nvim" }
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins

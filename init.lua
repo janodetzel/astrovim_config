@@ -97,17 +97,16 @@ local config = {
 
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
-      -- {
-      --   "ray-x/lsp_signature.nvim",
-      --   event = "BufRead",
-      --   config = function()
-      --     require("lsp_signature").setup()
-      --   end,
-      -- },
+      {
+        "ray-x/lsp_signature.nvim",
+        event = "BufRead",
+        config = function()
+          require("lsp_signature").setup()
+        end,
+      },
       { "github/copilot.vim" },
       { "sheerun/vim-polyglot" },
       { "AndrewRadev/tagalong.vim" },
-      { "nvim-lua/plenary.nvim" },
       { "jose-elias-alvarez/nvim-lsp-ts-utils" },
       {
         "ur4ltz/surround.nvim",

@@ -19,15 +19,17 @@ local config = {
    -- Set dashboard header
   header = {
     " ",
-    " ",
-    " ",
-    "███    ██ ██    ██ ██ ███    ███",
-    "████   ██ ██    ██ ██ ████  ████",
-    "██ ██  ██ ██    ██ ██ ██ ████ ██",
-    "██  ██ ██  ██  ██  ██ ██  ██  ██",
-    "██   ████   ████   ██ ██      ██",
-    " ",
-    " ",
+    -- " ",
+    -- "================================",
+    -- " ",
+    -- "███    ██ ██    ██ ██ ███    ███",
+    -- "████   ██ ██    ██ ██ ████  ████",
+    -- "██ ██  ██ ██    ██ ██ ██ ████ ██",
+    -- "██  ██ ██  ██  ██  ██ ██  ██  ██",
+    -- "██   ████   ████   ██ ██      ██",
+    -- " ",
+    -- "================================",
+    -- " ",
     " ",
   },
 
@@ -126,7 +128,7 @@ local config = {
       config.sources = {
         -- Set a formatter
         null_ls.builtins.formatting.rufo,
-        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.prettier,
         -- Set a linter
         null_ls.builtins.diagnostics.rubocop,
         -- null_ls.builtins.diagnostics.eslint,

@@ -128,6 +128,7 @@ local config = {
         -- Set a formatter
         null_ls.builtins.formatting.rufo,
         null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.gofmt,
         -- Set a linter
         null_ls.builtins.diagnostics.rubocop,
         -- null_ls.builtins.diagnostics.eslint,
@@ -267,6 +268,11 @@ local config = {
     -- add to the server on_attach function
     -- on_attach = function(client, bufnr)
     on_attach = function(client, bufnr)
+      if client.name == "gopls" then
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+      end
+
       if client.name == "volar" then
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
@@ -274,6 +280,7 @@ local config = {
 
       if client.name == "tsserver" then
         client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
         local ts_utils = require("nvim-lsp-ts-utils")
 
         -- defaults

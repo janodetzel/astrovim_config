@@ -387,6 +387,10 @@ local config = {
       -- second key is the lefthand side of the map
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
       ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
+      ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+      ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
+      ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
+      ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
     },
     i = {
       ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },

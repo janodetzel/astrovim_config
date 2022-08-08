@@ -97,6 +97,7 @@ local config = {
 
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
+      ["numToStr/Comment.nvim"] = { disable = true },
       {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
@@ -112,6 +113,13 @@ local config = {
         "ur4ltz/surround.nvim",
         config = function()
          require"surround".setup {mappings_style = "surround"}
+        end
+      },
+      {
+        "terrortylor/nvim-comment",
+        after = "nvim-treesitter",
+        config = function()
+          require('nvim_comment').setup()
         end
       },
       -- { "Mofiqul/dracula.nvim" }

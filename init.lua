@@ -385,14 +385,17 @@ local config = {
     n = {
       -- second key is the lefthand side of the map
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
     },
     i = {
       ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
       s = false
     },
     t = {
       -- setting a mapping to false will disable it
       ["<esc>"] = false,
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
     },
   },
 

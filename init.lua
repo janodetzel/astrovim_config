@@ -99,13 +99,13 @@ local config = {
       -- { "andweeb/presence.nvim" },
       ["numToStr/Comment.nvim"] = { disable = true },
       { "tpope/vim-fugitive" },
-      {
-        "ray-x/lsp_signature.nvim",
-        event = "BufRead",
-        config = function()
-          require("lsp_signature").setup()
-        end,
-      },
+      -- {
+      --   "ray-x/lsp_signature.nvim",
+      --   event = "BufRead",
+      --   config = function()
+      --     require("lsp_signature").setup()
+      --   end,
+      -- },
       { "github/copilot.vim" },
       { "sheerun/vim-polyglot" },
       { "AndrewRadev/tagalong.vim" },

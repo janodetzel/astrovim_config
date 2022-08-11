@@ -124,7 +124,8 @@ local config = {
         end
       },
       -- { "Mofiqul/dracula.nvim" }
-      { "https://github.com/janodetzel/dracula.nvim" }
+      { "https://github.com/janodetzel/dracula.nvim" },
+      { "simeji/winresizer" }
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins

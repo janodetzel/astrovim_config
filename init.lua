@@ -229,9 +229,6 @@ local config = {
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
           l = {
-              o = { "Organize Imports" },
-              R = { "Rename current file" },
-              A = { "Import all missing" },
               p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
           },
           t = {
@@ -342,10 +339,18 @@ local config = {
         ts_utils.setup_client(client)
 
         -- no default maps, so you may want to define some here
-        local opts = { silent = true }
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lo", ":TSLspOrganize<CR>", opts)
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lR", ":TSLspRenameFile<CR>", opts)
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lA", ":TSLspImportAll<CR>", opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lo", ":TSLspOrganize<CR>", {
+            silent = true,
+            desc = "Organize imports"
+          })
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lA", ":TSLspImportAll<CR>", {
+            silent = true,
+            desc = "Import all missing imports"
+          })
+        vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lR", ":TSLspRenameFile<CR>", {
+            silent = true,
+            desc = "Rename current file"
+          })
 
       end
     end,

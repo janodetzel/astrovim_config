@@ -217,7 +217,6 @@ local config = {
         ["<leader>"] = {
           -- which-key registration table for normal mode, leader prefix
           ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
-          ["C"] = { "<cmd>bufdo bwipeout<cr>", "Close allbuffers"},
           f = {
             name = "Telescope",
             ["?"] = { "<cmd>Telescope help_tags<cr>", "Find Help" },
@@ -422,6 +421,39 @@ local config = {
       pattern = "plugins.lua",
       command = "source <afile> | PackerSync",
     })
+
+    local function alpha_on_bye(cmd)
+      local bufs = vim.fn.getbufinfo { buflisted = true }
+      vim.cmd(cmd)
+      if require("core.utils").is_available "alpha-nvim" and not bufs[2] then
+        require("alpha").start(true)
+      end
+    end
+
+    vim.keymap.del("n", "<leader>c")
+    if require("core.utils").is_available "bufdelete.nvim" then
+      vim.keymap.set("n", "<leader>c", function()
+        alpha_on_bye "Bdelete!"
+      end, { desc = "Close buffer" })
+    else
+      vim.keymap.set("n", "<leader>c", function()
+        alpha_on_bye "bdelete!"
+      end, { desc = "Close buffer" })
+    end
+
+    if require("core.utils").is_available "bufdelete.nvim" then
+      vim.keymap.set("n", "<leader>C", function()
+        vim.cmd("Neotree close")
+        vim.cmd("bufdo Bdelete!")
+        alpha_on_bye "Bdelete!"
+      end, { desc = "Close all buffers" })
+    else
+      vim.keymap.set("n", "<leader>C", function()
+        vim.cmd("Neotree close")
+        vim.cmd("bufdo bdelete!")
+        alpha_on_bye "bdelete!"
+      end, { desc = "Close all buffers" })
+    end
 
     -- Set up custom filetypes
     -- vim.filetype.add {

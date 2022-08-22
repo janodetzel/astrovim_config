@@ -106,7 +106,7 @@ local config = {
       --     require("lsp_signature").setup()
       --   end,
       -- },
-      { "github/copilot.vim" },
+      -- { "github/copilot.vim" },
       { "sheerun/vim-polyglot" },
       { "AndrewRadev/tagalong.vim" },
       { "jose-elias-alvarez/nvim-lsp-ts-utils" },
@@ -170,8 +170,8 @@ local config = {
 	        function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif vim.b._copilot_suggestion ~= nil then
-              vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
+            -- elseif vim.b._copilot_suggestion ~= nil then
+            --   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
             else
               fallback()
             end
@@ -228,7 +228,7 @@ local config = {
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
           l = {
-              p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
+              -- p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
           },
           t = {
             b = {
@@ -398,7 +398,7 @@ local config = {
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
     },
     i = {
-      ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
+      -- ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
       ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
       s = false
     },

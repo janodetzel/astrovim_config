@@ -35,7 +35,7 @@ local config = {
 
   -- Set colorscheme
   -- colorscheme = "default_theme",
-  colorscheme = "dracula",
+  colorscheme = "tokyonight-night",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -124,7 +124,8 @@ local config = {
         end
       },
       -- { "Mofiqul/dracula.nvim" }
-      { "https://github.com/janodetzel/dracula.nvim" },
+      -- { "https://github.com/janodetzel/dracula.nvim" },
+      { 'folke/tokyonight.nvim'},
       { "simeji/winresizer" }
     },
     -- Now configure some of the default plugins:

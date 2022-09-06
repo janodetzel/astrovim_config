@@ -16,7 +16,7 @@ local config = {
     -- },
   },
 
-   -- Set dashboard header
+  -- Set dashboard header
   header = {
     " ",
     -- " ",
@@ -112,21 +112,18 @@ local config = {
       { "jose-elias-alvarez/nvim-lsp-ts-utils" },
       {
         "ur4ltz/surround.nvim",
-        config = function()
-         require"surround".setup {mappings_style = "surround"}
-        end
+        config = function() require("surround").setup { mappings_style = "surround" } end,
       },
       {
         "terrortylor/nvim-comment",
         after = "nvim-treesitter",
-        config = function()
-          require('nvim_comment').setup()
-        end
+        config = function() require("nvim_comment").setup() end,
       },
+      { "nvim-treesitter/nvim-treesitter-context" },
       -- { "Mofiqul/dracula.nvim" }
       -- { "https://github.com/janodetzel/dracula.nvim" },
-      { 'folke/tokyonight.nvim'},
-      { "simeji/winresizer" }
+      { "folke/tokyonight.nvim" },
+      { "simeji/winresizer" },
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
@@ -139,16 +136,17 @@ local config = {
         -- Set a formatter
         null_ls.builtins.formatting.rufo,
         null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.gofmt,
         -- Set a linter
         null_ls.builtins.diagnostics.rubocop,
         -- null_ls.builtins.diagnostics.eslint,
-        null_ls.builtins.diagnostics.eslint_d.with({
-            only_local = "node_modules/.bin"
-          }),
-        null_ls.builtins.code_actions.eslint_d.with({
-            only_local = "node_modules/.bin"
-          })
+        null_ls.builtins.diagnostics.eslint_d.with {
+          only_local = "node_modules/.bin",
+        },
+        null_ls.builtins.code_actions.eslint_d.with {
+          only_local = "node_modules/.bin",
+        },
       }
       -- set up null-ls's on_attach function
       config.on_attach = function(client)
@@ -167,19 +165,18 @@ local config = {
       local cmp_ok, cmp = pcall(require, "cmp")
 
       if cmp_ok then
-	      config.mapping['<Tab>'] = cmp.mapping(
-	        function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
+        config.mapping["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
             -- elseif vim.b._copilot_suggestion ~= nil then
             --   vim.fn.feedkeys(vim.api.nvim_replace_termcodes(vim.fn['copilot#Accept'](), true, true, true), '')
-            else
-              fallback()
-            end
-          end, {
-            'i',
-            's',
-          })
+          else
+            fallback()
+          end
+        end, {
+          "i",
+          "s",
+        })
       end
       return config
     end,
@@ -187,7 +184,7 @@ local config = {
       ensure_installed = { "lua" },
       autotag = {
         enabled = true,
-      }
+      },
     },
     ["nvim-lsp-installer"] = {
       ensure_installed = { "sumneko_lua" },
@@ -211,8 +208,8 @@ local config = {
       pickers = {
         diagnostics = {
           layout_strategy = "vertical", -- change this and tweak defaults
-        }
-      }
+        },
+      },
     },
   },
 
@@ -248,16 +245,17 @@ local config = {
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
           l = {
-              -- p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
+            -- p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
           },
           t = {
             b = {
-                function()
-                  local Terminal  = require('toggleterm.terminal').Terminal
-                  local btop = Terminal:new({ cmd = "btop", hidden = true, direction = "float" })
-                  btop:toggle()
-                end,
-                "ToggleTerm btop"}
+              function()
+                local Terminal = require("toggleterm.terminal").Terminal
+                local btop = Terminal:new { cmd = "btop", hidden = true, direction = "float" }
+                btop:toggle()
+              end,
+              "ToggleTerm btop",
+            },
           },
         },
       },
@@ -307,70 +305,69 @@ local config = {
       if client.name == "tsserver" then
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
+        local ts_utils = require "nvim-lsp-ts-utils"
 
         -- defaults
-        ts_utils.setup({
-            debug = false,
-            disable_commands = false,
-            enable_import_on_completion = false,
-            -- import all
-            import_all_timeout = 5000,
-            import_all_priorities = {
-                same_file = 1, -- add to existing import statement
-                local_files = 2, -- git files or files with relative path markers
-                buffer_content = 3, -- loaded buffer content
-                buffers = 4, -- loaded buffer names
-            },
-            import_all_scan_buffers = 100,
-            import_all_select_source = false,
-            -- if false will avoid organizing imports
-            always_organize_imports = true,
+        ts_utils.setup {
+          debug = false,
+          disable_commands = false,
+          enable_import_on_completion = false,
+          -- import all
+          import_all_timeout = 5000,
+          import_all_priorities = {
+            same_file = 1, -- add to existing import statement
+            local_files = 2, -- git files or files with relative path markers
+            buffer_content = 3, -- loaded buffer content
+            buffers = 4, -- loaded buffer names
+          },
+          import_all_scan_buffers = 100,
+          import_all_select_source = false,
+          -- if false will avoid organizing imports
+          always_organize_imports = true,
 
-            -- filter diagnostics
-            filter_out_diagnostics_by_severity = {},
-            filter_out_diagnostics_by_code = {},
+          -- filter diagnostics
+          filter_out_diagnostics_by_severity = {},
+          filter_out_diagnostics_by_code = {},
 
-            -- inlay hints
-            auto_inlay_hints = false,
-            inlay_hints_highlight = "Comment",
-            inlay_hints_priority = 200, -- priority of the hint extmarks
-            inlay_hints_throttle = 150, -- throttle the inlay hint request
-            inlay_hints_format = { -- format options for individual hint kind
-                Type = {},
-                Parameter = {},
-                Enum = {},
-                -- Example format customization for `Type` kind:
-                -- Type = {
-                --     highlight = "Comment",
-                --     text = function(text)
-                --         return "->" .. text:sub(2)
-                --     end,
-                -- },
-            },
+          -- inlay hints
+          auto_inlay_hints = false,
+          inlay_hints_highlight = "Comment",
+          inlay_hints_priority = 200, -- priority of the hint extmarks
+          inlay_hints_throttle = 150, -- throttle the inlay hint request
+          inlay_hints_format = { -- format options for individual hint kind
+            Type = {},
+            Parameter = {},
+            Enum = {},
+            -- Example format customization for `Type` kind:
+            -- Type = {
+            --     highlight = "Comment",
+            --     text = function(text)
+            --         return "->" .. text:sub(2)
+            --     end,
+            -- },
+          },
 
-            -- update imports on file move
-            update_imports_on_move = true,
-            require_confirmation_on_move = false,
-            watch_dir = nil,
-          })
+          -- update imports on file move
+          update_imports_on_move = true,
+          require_confirmation_on_move = false,
+          watch_dir = nil,
+        }
 
         ts_utils.setup_client(client)
 
         -- no default maps, so you may want to define some here
         vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lo", ":TSLspOrganize<CR>", {
-            silent = true,
-            desc = "Organize imports"
-          })
+          silent = true,
+          desc = "Organize imports",
+        })
         vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lA", ":TSLspImportAll<CR>", {
-            silent = true,
-            desc = "Import all missing imports"
-          })
+          silent = true,
+          desc = "Import all missing imports",
+        })
         vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>lR", ":TSLspRenameFile<CR>", {
-            silent = true,
-            desc = "Rename current file"
-          })
-
+          silent = true,
+          desc = "Rename current file",
+        })
       end
     end,
 
@@ -395,9 +392,8 @@ local config = {
       -- },
       tsserver = {
         init_options = require("nvim-lsp-ts-utils").init_options,
-      }
-  	},
-
+      },
+    },
   },
 
   -- Diagnostics configuration (for vim.diagnostics.config({}))
@@ -420,7 +416,7 @@ local config = {
     i = {
       -- ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
       ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
-      s = false
+      s = false,
     },
     t = {
       -- setting a mapping to false will disable it
@@ -445,32 +441,26 @@ local config = {
     local function alpha_on_bye(cmd)
       local bufs = vim.fn.getbufinfo { buflisted = true }
       vim.cmd(cmd)
-      if require("core.utils").is_available "alpha-nvim" and not bufs[2] then
-        require("alpha").start(true)
-      end
+      if require("core.utils").is_available "alpha-nvim" and not bufs[2] then require("alpha").start(true) end
     end
 
     vim.keymap.del("n", "<leader>c")
     if require("core.utils").is_available "bufdelete.nvim" then
-      vim.keymap.set("n", "<leader>c", function()
-        alpha_on_bye "Bdelete!"
-      end, { desc = "Close buffer" })
+      vim.keymap.set("n", "<leader>c", function() alpha_on_bye "Bdelete!" end, { desc = "Close buffer" })
     else
-      vim.keymap.set("n", "<leader>c", function()
-        alpha_on_bye "bdelete!"
-      end, { desc = "Close buffer" })
+      vim.keymap.set("n", "<leader>c", function() alpha_on_bye "bdelete!" end, { desc = "Close buffer" })
     end
 
     if require("core.utils").is_available "bufdelete.nvim" then
       vim.keymap.set("n", "<leader>C", function()
-        vim.cmd("Neotree close")
-        vim.cmd("bufdo Bdelete!")
+        vim.cmd "Neotree close"
+        vim.cmd "bufdo Bdelete!"
         alpha_on_bye "Bdelete!"
       end, { desc = "Close all buffers" })
     else
       vim.keymap.set("n", "<leader>C", function()
-        vim.cmd("Neotree close")
-        vim.cmd("bufdo bdelete!")
+        vim.cmd "Neotree close"
+        vim.cmd "bufdo bdelete!"
         alpha_on_bye "bdelete!"
       end, { desc = "Close all buffers" })
     end

@@ -127,6 +127,9 @@ local config = {
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
+    ["cinnamon"] = {
+      extra_keymaps = true,
+    },
     ["null-ls"] = function(config)
       local null_ls = require "null-ls"
       -- Check supported formatters and linters
@@ -194,6 +197,11 @@ local config = {
     },
     ["telescope"] = {
       defaults = {
+        mappings = {
+          n = {
+            ["q"] = "close",
+          },
+        },
         layout_config = {
           vertical = {
             prompt_position = "top",

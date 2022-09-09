@@ -97,6 +97,7 @@ local config = {
 
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
+      ["declancm/cinnamon.nvim"] = { disable = true },
       ["numToStr/Comment.nvim"] = { disable = true },
       { "tpope/vim-fugitive" },
       -- {
@@ -128,7 +129,9 @@ local config = {
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
     ["cinnamon"] = {
+      default_delay = 3,
       extra_keymaps = true,
+      extended__keymaps = true,
     },
     ["null-ls"] = function(config)
       local null_ls = require "null-ls"

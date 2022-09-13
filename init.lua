@@ -97,8 +97,10 @@ local config = {
 
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
+      ["famiu/bufdelete.nvim"] = { disable = true },
       ["declancm/cinnamon.nvim"] = { disable = true },
       ["numToStr/Comment.nvim"] = { disable = true },
+      { "kazhala/close-buffers.nvim" },
       { "tpope/vim-fugitive" },
       -- {
       --   "ray-x/lsp_signature.nvim",
@@ -128,6 +130,13 @@ local config = {
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
+    ["bufferline"] = {
+      options = {
+        max_name_length = 99999,
+        tab_size = nil,
+        autosize = true,
+      },
+    },
     ["cinnamon"] = {
       default_delay = 3,
       extra_keymaps = true,
@@ -420,9 +429,11 @@ local config = {
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
       ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
       ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+      ["<leader>bp"] = { "<cmd>BufferLineTogglePin<cr>", desc = "Pin tab" },
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
+      ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
     },
     i = {
       -- ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },
@@ -456,17 +467,37 @@ local config = {
     end
 
     vim.keymap.del("n", "<leader>c")
-    if require("core.utils").is_available "bufdelete.nvim" then
-      vim.keymap.set("n", "<leader>c", function() alpha_on_bye "Bdelete!" end, { desc = "Close buffer" })
+    if require("core.utils").is_available "close-buffers.nvim" then
+      vim.keymap.set("n", "<leader>c", function() alpha_on_bye "BDelete! this" end, { desc = "Close buffer" })
+      vim.keymap.set("n", "<leader>bdt", function() alpha_on_bye "BDelete! this" end, { desc = "Close buffer" })
+      vim.keymap.set(
+        "n",
+        "<leader>bdh",
+        function() alpha_on_bye "BDelete! hidden" end,
+        { desc = "Close all hidden buffers" }
+      )
+      vim.keymap.set("n", "<leader>bda", function() alpha_on_bye "BDelete! all" end, { desc = "Close all buffers" })
+      vim.keymap.set(
+        "n",
+        "<leader>bdo",
+        function() alpha_on_bye "BDelete! other" end,
+        { desc = "Close not this buffer" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>bdn",
+        function() alpha_on_bye "BDelete! nameless" end,
+        { desc = "Close nameless buffers" }
+      )
     else
       vim.keymap.set("n", "<leader>c", function() alpha_on_bye "bdelete!" end, { desc = "Close buffer" })
     end
 
-    if require("core.utils").is_available "bufdelete.nvim" then
+    if require("core.utils").is_available "close-buffers.nvim" then
       vim.keymap.set("n", "<leader>C", function()
         vim.cmd "Neotree close"
-        vim.cmd "bufdo Bdelete!"
-        alpha_on_bye "Bdelete!"
+        vim.cmd "BDelete! hidden"
+        alpha_on_bye "BDelete! this"
       end, { desc = "Close all buffers" })
     else
       vim.keymap.set("n", "<leader>C", function()

@@ -264,6 +264,12 @@ local config = {
             N = { "<cmd>Telescope notify<cr>", "Notifications" },
             t = { "<cmd>Telescope colorscheme<cr>", "Themes" },
           },
+          b = {
+            name = "Buffer",
+            d = {
+              name = "Delete",
+            },
+          },
           l = {
             -- p = { "<cmd>Copilot panel<cr>", "Copilot panel" },
           },
@@ -428,11 +434,13 @@ local config = {
       -- second key is the lefthand side of the map
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
       ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
-      ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-      ["<leader>bp"] = { "<cmd>BufferLineTogglePin<cr>", desc = "Pin tab" },
+      ["<leader>T"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+      ["<leader>bdt"] = { "<cmd>tabc<cr>", desc = "This tab" },
+      ["<leader>bdT"] = { "<cmd>tabdo tabc<cr>", desc = "All tabs" },
+
+      ["<leader>bp"] = { "<cmd>BufferLineTogglePin<cr>", desc = "Pin buffer" },
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-      ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
       ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
     },
     i = {
@@ -469,26 +477,11 @@ local config = {
     vim.keymap.del("n", "<leader>c")
     if require("core.utils").is_available "close-buffers.nvim" then
       vim.keymap.set("n", "<leader>c", function() alpha_on_bye "BDelete! this" end, { desc = "Close buffer" })
-      vim.keymap.set("n", "<leader>bdt", function() alpha_on_bye "BDelete! this" end, { desc = "Close buffer" })
-      vim.keymap.set(
-        "n",
-        "<leader>bdh",
-        function() alpha_on_bye "BDelete! hidden" end,
-        { desc = "Close all hidden buffers" }
-      )
-      vim.keymap.set("n", "<leader>bda", function() alpha_on_bye "BDelete! all" end, { desc = "Close all buffers" })
-      vim.keymap.set(
-        "n",
-        "<leader>bdo",
-        function() alpha_on_bye "BDelete! other" end,
-        { desc = "Close not this buffer" }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>bdn",
-        function() alpha_on_bye "BDelete! nameless" end,
-        { desc = "Close nameless buffers" }
-      )
+      vim.keymap.set("n", "<leader>bdd", function() alpha_on_bye "BDelete! this" end, { desc = "This buffer" })
+      vim.keymap.set("n", "<leader>bdh", function() alpha_on_bye "BDelete! hidden" end, { desc = "Hidden buffers" })
+      vim.keymap.set("n", "<leader>bda", function() alpha_on_bye "BDelete! all" end, { desc = "All buffers" })
+      vim.keymap.set("n", "<leader>bdo", function() alpha_on_bye "BDelete! other" end, { desc = "Other buffers" })
+      vim.keymap.set("n", "<leader>bdn", function() alpha_on_bye "BDelete! nameless" end, { desc = "Nameless buffers" })
     else
       vim.keymap.set("n", "<leader>c", function() alpha_on_bye "bdelete!" end, { desc = "Close buffer" })
     end

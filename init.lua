@@ -127,6 +127,7 @@ local config = {
       -- { "https://github.com/janodetzel/dracula.nvim" },
       { "folke/tokyonight.nvim" },
       { "simeji/winresizer" },
+      { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
     },
     -- Now configure some of the default plugins:
     -- All other entries override the setup() call for default plugins
@@ -442,6 +443,10 @@ local config = {
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
       ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
+
+      ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
+      ["<leader>gD"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View git history diff" },
+      ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
     },
     i = {
       -- ["<C-p>"] = { "copilot#Accept('<CR>')", desc = "Copilot accept", expr=true },

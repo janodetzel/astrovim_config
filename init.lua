@@ -151,7 +151,7 @@ local config = {
       config.sources = {
         -- Set a formatter
         null_ls.builtins.formatting.rufo,
-        null_ls.builtins.formatting.prettier,
+        -- null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.gofmt,
         -- Set a linter
@@ -165,16 +165,6 @@ local config = {
         },
       }
       -- set up null-ls's on_attach function
-      config.on_attach = function(client)
-        -- NOTE: You can remove this on attach function to disable format on save
-        if client.server_capabilities.document_formatting then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc = "Auto format before save",
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync,
-          })
-        end
-      end
       return config -- return final config table
     end,
     cmp = function(config)
@@ -315,6 +305,15 @@ local config = {
       n = {
         -- ["<leader>lf"] = false, -- disable formatting keymap
       },
+    },
+    formatting = {
+      -- timeout_ms = 3200, -- adjust the timeout_ms variable for formatting
+      -- filter = function(client)
+      --   print(client.name)
+      --   if client.name == "tsserver" then return false end
+      --   if vim.bo.filetype == "javascript" then return client.name == "null-ls" end
+      --
+      -- end,
     },
     -- add to the server on_attach function
     -- on_attach = function(client, bufnr)

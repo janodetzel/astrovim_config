@@ -155,9 +155,13 @@ local config = {
         -- "sumneko_lua",
       },
       timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
+      filter = function(client) -- fully override the default formatting function
+        if vim.bo.filetype == "javascript" then return client.name == "null-ls" end
+        if vim.bo.filetype == "javascriptreact" then return client.name == "null-ls" end
+        if vim.bo.filetype == "typescript" then return client.name == "null-ls" end
+        if vim.bo.filetype == "typescriptreact" then return client.name == "null-ls" end
+        return true
+      end,
     },
     -- easily add or disable built in mappings added during LSP attaching
     mappings = {
@@ -253,29 +257,35 @@ local config = {
     -- All other entries override the require("<key>").setup({...}) call for default plugins
     ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
       -- config variable is the default configuration table for the setup function call
-      -- local null_ls = require "null-ls"
+      local null_ls = require "null-ls"
 
       -- Check supported formatters and linters
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
       config.sources = {
         -- Set a formatter
-        -- null_ls.builtins.formatting.stylua,
-        -- null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.diagnostics.eslint_d.with {
+          only_local = "node_modules/.bin",
+        },
+        null_ls.builtins.code_actions.eslint_d.with {
+          only_local = "node_modules/.bin",
+        },
       }
       return config -- return final config table
     end,
     treesitter = { -- overrides `require("treesitter").setup(...)`
-      -- ensure_installed = { "lua" },
+      ensure_installed = { "lua", "javascript", "typescript" },
     },
     -- use mason-lspconfig to configure LSP installations
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
       -- ensure_installed = { "sumneko_lua" },
-      ensure_installed = { "tsserver" },
+      ensure_installed = { "tsserver", "eslint" },
     },
     -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
     ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
-      -- ensure_installed = { "prettier", "stylua" },
+      ensure_installed = { "prettierd", "stylua", "eslint_d", "eslint" },
     },
   },
 

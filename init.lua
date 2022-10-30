@@ -1,4 +1,4 @@
---              AstroNvim Configuration Table
+-- AstroNvim Configuration Table
 -- All configuration changes should go inside of the table below
 
 -- You can think of a Lua "table" as a dictionary like data structure the
@@ -156,7 +156,6 @@ local config = {
         -- "sumneko_lua",
       },
       timeout_ms = 1000, -- default format timeout
-      async = true,
       filter = function(client) -- fully override the default formatting function
         if vim.bo.filetype == "javascript" then return client.name == "null-ls" end
         if vim.bo.filetype == "javascriptreact" then return client.name == "null-ls" end

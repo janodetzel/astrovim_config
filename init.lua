@@ -70,17 +70,19 @@ local config = {
 
   -- Set dashboard header
   header = {
-    " █████  ███████ ████████ ██████   ██████",
-    "██   ██ ██         ██    ██   ██ ██    ██",
-    "███████ ███████    ██    ██████  ██    ██",
-    "██   ██      ██    ██    ██   ██ ██    ██",
-    "██   ██ ███████    ██    ██   ██  ██████",
     " ",
-    "    ███    ██ ██    ██ ██ ███    ███",
-    "    ████   ██ ██    ██ ██ ████  ████",
-    "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-    "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-    "    ██   ████   ████   ██ ██      ██",
+    -- " █████  ███████ ████████ ██████   ██████",
+    -- "██   ██ ██         ██    ██   ██ ██    ██",
+    -- "███████ ███████    ██    ██████  ██    ██",
+    -- "██   ██      ██    ██    ██   ██ ██    ██",
+    -- "██   ██ ███████    ██    ██   ██  ██████",
+    -- " ",
+    -- "    ███    ██ ██    ██ ██ ███    ███",
+    -- "    ████   ██ ██    ██ ██ ████  ████",
+    -- "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
+    -- "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
+    -- "    ██   ████   ████   ██ ██      ██",
+    " ",
   },
 
   -- Default theme configuration
@@ -205,16 +207,60 @@ local config = {
     n = {
       -- second key is the lefthand side of the map
       -- mappings seen under group name "Buffer"
-      ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+      -- toggleterm
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
+      -- tabs
+      ["<leader>bdt"] = { "<cmd>tabc<cr>", desc = "This tab" },
+      ["<leader>bdT"] = { "<cmd>tabdo tabc<cr>", desc = "All tabs" },
+      -- buffer
+      ["<leader>bp"] = { "<cmd>BufferLineTogglePin<cr>", desc = "Pin buffer" },
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-      ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
+      ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
+      -- typescript
+      ["<leader>lo"] = {
+        function()
+          require("typescript").actions.organizeImports()
+          require("typescript").actions.removeUnused()
+        end,
+        desc = "TS Organize",
+      },
+      ["<leader>lA"] = {
+        function() require("typescript").actions.addMissingImports() end,
+        desc = "Add missing imports",
+      },
+      -- file
+      ["<leader>fr"] = { "<cmd>Telescope resume<cr>", desc = "Resume" },
+      -- search
+      ["<leader>sh"] = { "<cmd>Telescope command_history<cr>", desc = "Command history" },
+      -- toggleTerminal
+      ["<leader>tt"] = {
+        function()
+          local Terminal = require("toggleterm.terminal").Terminal
+          local btop = Terminal:new { cmd = "btop", hidden = true, direction = "float" } -- TODO: install btop globally
+          btop:toggle()
+        end,
+        desc = "ToggleTerm btop",
+      },
+      -- better increment/decrement
+      ["-"] = { "<c-x>", desc = "Descrement number" },
+      ["+"] = { "<c-a>", desc = "Increment number" },
       -- quick save
       -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
     },
+    i = {
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
+      ["<C-h>"] = { "<Esc><Cmd>SmartCursorMoveLeft<CR>", desc = "Move cursor left" },
+      ["<C-j>"] = { "<Esc><Cmd>SmartCursorMoveDown<CR>", desc = "Move cursor down" },
+      ["<C-k>"] = { "<Esc><Cmd>SmartCursorMoveUp<CR>", desc = "Move cursor up" },
+      ["<C-l>"] = { "<Esc><Cmd>SmartCursorMoveRight<CR>", desc = "Move cursor right" },
+    },
     t = {
+      ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
       -- setting a mapping to false will disable it
-      -- ["<esc>"] = false,
+      ["<esc>"] = false,
+      ["jk"] = { "<c-\\><c-n>", desc = "Terminal normal mode" },
+      ["<esc><esc>"] = { "<c-\\><c-n>:q<cr>", desc = "Terminal quit" },
     },
   },
 
@@ -295,7 +341,8 @@ local config = {
     vscode_snippet_paths = {},
     -- Extend filetypes
     filetype_extend = {
-      -- javascript = { "javascriptreact" },
+      javascript = { "javascriptreact" },
+      typescript = { "typescriptreact" },
     },
   },
 
@@ -324,7 +371,7 @@ local config = {
         ["<leader>"] = {
           -- third key is the key to bring up next level and its displayed
           -- group name in which-key top level menu
-          ["b"] = { name = "Buffer" },
+          ["b"] = { name = "Buffer", d = { name = "Delete" } },
         },
       },
     },

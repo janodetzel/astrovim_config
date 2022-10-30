@@ -90,7 +90,6 @@ local config = {
     -- Modify the color palette for the default theme
     colors = {
       fg = "#abb2bf",
-      bg = "#1e222a",
     },
     highlights = function(hl) -- or a function that returns a new table of colors to set
       local C = require "default_theme.colors"
@@ -157,6 +156,7 @@ local config = {
         -- "sumneko_lua",
       },
       timeout_ms = 1000, -- default format timeout
+      async = true,
       filter = function(client) -- fully override the default formatting function
         if vim.bo.filetype == "javascript" then return client.name == "null-ls" end
         if vim.bo.filetype == "javascriptreact" then return client.name == "null-ls" end
@@ -289,7 +289,22 @@ local config = {
       --   end,
       -- },
 
-      { "folke/tokyonight.nvim" },
+      -- disabled plugins
+      ["famiu/bufdelete.nvim"] = { disable = true },
+      ["numToStr/Comment.nvim"] = { disable = true },
+      -- bufdelete alternative
+      { "kazhala/close-buffers.nvim" },
+      -- Comment.nvim alternative
+      {
+        "terrortylor/nvim-comment",
+        after = "nvim-treesitter",
+        config = function() require("nvim_comment").setup() end,
+      },
+      { "nvim-treesitter/nvim-treesitter-context" },
+      -- better git
+      { "tpope/vim-fugitive" },
+      { "sheerun/vim-polyglot" },
+      { "AndrewRadev/tagalong.vim" },
       {
         "jose-elias-alvarez/typescript.nvim",
         after = "mason-lspconfig.nvim",
@@ -299,8 +314,24 @@ local config = {
           }
         end,
       },
+      -- surround
+      {
+        "ur4ltz/surround.nvim",
+        config = function() require("surround").setup { mappings_style = "surround" } end,
+      },
+      -- window resizer
+      { "simeji/winresizer" },
+      -- theme
+      { "folke/tokyonight.nvim" },
     },
     -- All other entries override the require("<key>").setup({...}) call for default plugins
+    ["bufferline"] = {
+      options = {
+        max_name_length = 99999,
+        tab_size = nil,
+        autosize = true,
+      },
+    },
     ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
       -- config variable is the default configuration table for the setup function call
       local null_ls = require "null-ls"
@@ -323,6 +354,9 @@ local config = {
     end,
     treesitter = { -- overrides `require("treesitter").setup(...)`
       ensure_installed = { "lua", "javascript", "typescript" },
+      autotag = {
+        enable = true,
+      },
     },
     -- use mason-lspconfig to configure LSP installations
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
@@ -332,6 +366,30 @@ local config = {
     -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
     ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
       ensure_installed = { "prettierd", "stylua", "eslint_d", "eslint" },
+    },
+    ["telescope"] = {
+      defaults = {
+        mappings = {
+          n = {
+            ["q"] = "close",
+          },
+        },
+        layout_config = {
+          vertical = {
+            prompt_position = "top",
+            mirror = true,
+            preview_cutoff = 40,
+            preview_height = 0.5,
+          },
+          width = 0.95,
+          height = 0.95,
+        },
+      },
+      pickers = {
+        diagnostics = {
+          layout_strategy = "vertical",
+        },
+      },
     },
   },
 

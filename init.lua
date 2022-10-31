@@ -233,6 +233,7 @@ local config = {
       -- search
       ["<leader>sh"] = { "<cmd>Telescope command_history<cr>", desc = "Command history" },
       -- toggleTerminal
+      ["<leader>tu"] = false,
       ["<leader>tt"] = {
         function()
           local Terminal = require("toggleterm.terminal").Terminal
@@ -241,6 +242,7 @@ local config = {
         end,
         desc = "ToggleTerm btop",
       },
+      ["<leader>tc"] = { "<cmd>CodiSelect<cr>", desc = "Codi" },
       -- better increment/decrement
       ["-"] = { "<c-x>", desc = "Descrement number" },
       ["+"] = { "<c-a>", desc = "Increment number" },
@@ -320,6 +322,8 @@ local config = {
       },
       -- window resizer
       { "simeji/winresizer" },
+      -- interactive scratchpad
+      { "metakirby5/codi.vim" },
       -- theme
       { "folke/tokyonight.nvim" },
     },

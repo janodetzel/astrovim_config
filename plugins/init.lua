@@ -19,7 +19,7 @@ return {
   -- Better git
   { "tpope/vim-fugitive" },
   { "sheerun/vim-polyglot" },
-  { "AndrewRadev/tagalong.vim" },
+  -- { "AndrewRadev/tagalong.vim" },
   {
     "jose-elias-alvarez/typescript.nvim",
     after = "mason-lspconfig.nvim",

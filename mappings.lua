@@ -8,6 +8,10 @@ return {
     ["<C-l>"] = { require("smart-splits").move_cursor_right, desc = "Move cursor right" },
   },
   n = {
+    -- C-u / C-d
+    ["<C-u>"] = { "<C-u>zz", desc = "Center on <C-u>" },
+    ["<C-d>"] = { "<C-d>zz", desc = "Center on <C-d>" },
+
     -- Toggleterm
     ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
 

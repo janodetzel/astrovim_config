@@ -25,18 +25,6 @@ return {
     ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
     ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
 
-    -- Typescript
-    ["<leader>lo"] = {
-      function()
-        require("typescript").actions.organizeImports()
-        require("typescript").actions.removeUnused()
-      end,
-      desc = "TS Organize",
-    },
-    ["<leader>lA"] = {
-      function() require("typescript").actions.addMissingImports() end,
-      desc = "Add missing imports",
-    },
     -- File
     ["<leader>fr"] = { "<cmd>Telescope resume<cr>", desc = "Resume" },
     ["<leader>fu"] = { "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },

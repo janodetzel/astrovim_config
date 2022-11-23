@@ -44,4 +44,7 @@ return {
 
   -- Theme
   { "folke/tokyonight.nvim" },
+
+  -- UndoTree
+  { "mbbill/undotree" },
 }

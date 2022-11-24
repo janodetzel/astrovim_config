@@ -1,17 +1,9 @@
 return {
   -- Disabled plugins
   ["famiu/bufdelete.nvim"] = { disable = true },
-  ["numToStr/Comment.nvim"] = { disable = true },
 
   -- Bufdelete alternative
   { "kazhala/close-buffers.nvim" },
-
-  -- Comment.nvim alternative
-  {
-    "terrortylor/nvim-comment",
-    after = "nvim-treesitter",
-    config = function() require("nvim_comment").setup() end,
-  },
 
   -- Function header line
   { "nvim-treesitter/nvim-treesitter-context" },

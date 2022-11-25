@@ -28,6 +28,7 @@ return {
     -- File
     ["<leader>fr"] = { "<cmd>Telescope resume<cr>", desc = "Resume" },
     ["<leader>fu"] = { "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
+    ["<leader>ft"] = { "<cmd>TodoTelescope<cr>", desc = "Todos" },
 
     -- Search
     ["<leader>sh"] = { "<cmd>Telescope command_history<cr>", desc = "Command history" },

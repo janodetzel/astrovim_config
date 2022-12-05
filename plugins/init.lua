@@ -41,7 +41,8 @@ return {
   { "metakirby5/codi.vim" },
 
   -- Theme
-  { "folke/tokyonight.nvim" },
+  { "janodetzel/tokyonight.nvim" },
+  -- { "folke/tokyonight.nvim" },
 
   -- UndoTree
   { "mbbill/undotree" },

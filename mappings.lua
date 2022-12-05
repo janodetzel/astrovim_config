@@ -7,6 +7,7 @@ return {
     ["<C-k>"] = { require("smart-splits").move_cursor_up, desc = "Move cursor up" },
     ["<C-l>"] = { require("smart-splits").move_cursor_right, desc = "Move cursor right" },
     ["<C-BS>"] = { "<C-w>", desc = "Delete last word" },
+    ["<A-BS>"] = { "<C-w>", desc = "Delete last word" },
   },
   n = {
     -- C-u / C-d

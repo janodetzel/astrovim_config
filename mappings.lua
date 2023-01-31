@@ -47,6 +47,10 @@ return {
       desc = "ToggleTerm btop",
     },
 
+    ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
+    ["<leader>gD"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View git history diff" },
+    ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
+
     -- Better increment/decrement
     ["-"] = { "<c-x>", desc = "Descrement number" },
     ["+"] = { "<c-a>", desc = "Increment number" },

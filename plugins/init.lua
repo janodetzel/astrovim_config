@@ -46,4 +46,7 @@ return {
 
   -- UndoTree
   { "mbbill/undotree" },
+
+  -- DiffView
+  { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
 }

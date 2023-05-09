@@ -9,13 +9,13 @@ return function(config) -- Overrides `require("null-ls").setup(config)`
   config.sources = {
     -- Set formatter
     null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettier,
     -- Set diagnostics
     null_ls.builtins.diagnostics.eslint_d.with {
       only_local = "node_modules/.bin",
     },
     -- Set code actions
-    require("typescript.extensions.null-ls.code-actions"),
+    require "typescript.extensions.null-ls.code-actions",
     null_ls.builtins.code_actions.eslint_d.with {
       only_local = "node_modules/.bin",
     },

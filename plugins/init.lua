@@ -25,7 +25,17 @@ return {
   {
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
-    config = function() require("todo-comments").setup {} end,
+    config = function()
+      require("todo-comments").setup {
+        keywords = {
+          LOG = {
+            icon = " ", -- icon used for the sign, and in search results
+            color = "#FFFF00", -- can be a hex color, or a named color (see below)
+            alt = { "CONSOLE", "CLG", "1LOG", "1CLG", "1CONSOLE" },
+          },
+        },
+      }
+    end,
   },
 
   -- Surround characters

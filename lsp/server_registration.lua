@@ -1,4 +1,0 @@
--- Override the mason server-registration function
--- return function(server, opts)
---   require("lspconfig")[server].setup(opts)
--- end,

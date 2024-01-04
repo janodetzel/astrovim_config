@@ -1,69 +1,40 @@
+-- Mapping data with "desc" stored directly by vim.keymap.set().
+--
+-- Please use this mappings table to set keyboard mapping since this is the
+-- lower level configuration and more robust one. (which-key will
+-- automatically pick-up stored data by this setting.)
 return {
-  i = {
-    -- Cursor movement
-    ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
-    ["<C-h>"] = { require("smart-splits").move_cursor_left, desc = "Move cursor left" },
-    ["<C-j>"] = { require("smart-splits").move_cursor_down, desc = "Move cursor down" },
-    ["<C-k>"] = { require("smart-splits").move_cursor_up, desc = "Move cursor up" },
-    ["<C-l>"] = { require("smart-splits").move_cursor_right, desc = "Move cursor right" },
-    ["<C-BS>"] = { "<C-w>", desc = "Delete last word" },
-    ["<A-BS>"] = { "<C-w>", desc = "Delete last word" },
-  },
+  -- first key is the mode
   n = {
-    -- C-u / C-d
-    ["<C-u>"] = { "<C-u>zz", desc = "Center on <C-u>" },
-    ["<C-d>"] = { "<C-d>zz", desc = "Center on <C-d>" },
+    -- second key is the lefthand side of the map
 
-    -- Toggleterm
-    ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
+    -- navigate buffer tabs with `H` and `L`
+    -- L = {
+    --   function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+    --   desc = "Next buffer",
+    -- },
+    -- H = {
+    --   function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+    --   desc = "Previous buffer",
+    -- },
 
-    -- Tabs
-    ["<leader>bdt"] = { "<cmd>tabc<cr>", desc = "This tab" },
-    ["<leader>bdT"] = { "<cmd>tabdo tabc<cr>", desc = "All tabs" },
-
-    -- Buffer
-    ["<leader>bp"] = { "<cmd>BufferLineTogglePin<cr>", desc = "Pin buffer" },
-    ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
-    ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-    ["<leader>bs"] = { "<cmd>BufferLineSortByDir<cr>", desc = "Sort by directory" },
-
-    -- File
-    ["<leader>fr"] = { "<cmd>Telescope resume<cr>", desc = "Resume" },
-    ["<leader>fu"] = { "<cmd>UndotreeToggle<cr>", desc = "Undo tree" },
-    ["<leader>ft"] = { "<cmd>TodoTelescope<cr>", desc = "Todos" },
-
-    -- Search
-    ["<leader>sh"] = { "<cmd>Telescope command_history<cr>", desc = "Command history" },
-
-    -- ToggleTerminal
-    ["<leader>tu"] = false,
-    ["<leader>tc"] = { "<cmd>CodiSelect<cr>", desc = "Codi" },
-    ["<leader>tt"] = {
+    -- mappings seen under group name "Buffer"
+    ["<leader>bD"] = {
       function()
-        local Terminal = require("toggleterm.terminal").Terminal
-        local btop = Terminal:new { cmd = "btop", hidden = true, direction = "float" } -- TODO: install btop globally
-        btop:toggle()
+        require("astronvim.utils.status").heirline.buffer_picker(
+          function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
+        )
       end,
-      desc = "ToggleTerm btop",
+      desc = "Pick to close",
     },
-
-    ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
-    ["<leader>gD"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View git history diff" },
-    ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
-
-    -- Better increment/decrement
-    ["-"] = { "<c-x>", desc = "Descrement number" },
-    ["+"] = { "<c-a>", desc = "Increment number" },
-
+    -- tables with the `name` key will be registered with which-key if it's installed
+    -- this is useful for naming menus
+    ["<leader>b"] = { name = "Buffers" },
     -- quick save
     -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
   },
   t = {
-    ["<esc>"] = false,
-    ["<esc><esc>"] = { "<c-\\><c-n>:q<cr>", desc = "Terminal quit" },
-    ["jk"] = { "<c-\\><c-n>", desc = "Terminal normal mode" },
-
-    -- ToggleTerm
-    ["<C-ö>"] = { "<Esc><Cmd>ToggleTerm float<CR>", desc = "ToggleTerm float" },
+    -- setting a mapping to false will disable it
+    -- ["<esc>"] = false,
   },
 }

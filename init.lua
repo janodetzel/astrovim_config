@@ -98,6 +98,7 @@ local config = {
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
       ["numToStr/Comment.nvim"] = { disable = true },
+      { "tpope/vim-fugitive" },
       {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",

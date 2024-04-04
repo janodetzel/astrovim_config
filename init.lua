@@ -25,7 +25,7 @@ return {
       local astro_theme = require "astrotheme.palettes.astrodark"
       hl.bg = astro_theme.ui.statusline
       hl.fg = astro_theme.ui.base
-      hl.section_fg = astro_theme.ui.base
+      hl.section_fg = astro_theme.ui.text
       hl.section_bg = astro_theme.ui.statusline
       return hl
     end,
